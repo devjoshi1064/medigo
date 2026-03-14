@@ -1,9 +1,11 @@
-import { Show, SignInButton, SignUpButton, UserAvatar, UserButton } from '@clerk/nextjs'
+import { Show, SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import Link from 'next/link'
 import React from 'react'
 import { Button } from './ui/button'
+import { checkUser } from "../lib/checkUser"
 
-const Header = () => {
+const Header = async () => {
+    await checkUser();
     return (
         <header className='fixed top-0 w-full border-b bg-background/60  z-50 supports-backdrop-filter:bg-background/60'>
             <nav className=' px-4 h-16 container mx-auto flex items-center justify-between '>
