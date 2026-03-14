@@ -10,7 +10,7 @@ const inter = Inter({
 })
 
 export const metadata = {
-  title: "MediMeet - Doctor Appointment Platform",
+  title: "MediGO - Doctor Appointment Platform",
   description: "Connect with doctors anywhere, anytime with MediMeet.",
 };
 
