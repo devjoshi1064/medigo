@@ -28,7 +28,8 @@ export default function RootLayout({ children }) {
     >
       <html lang="en" suppressHydrationWarning={true}>
         <body
-          className={`${inter.className}`}
+          className={`${inter.className} highlighter-context`}  cz-shortcut-listen="true"
+          suppressHydrationWarning={true}
         >
           <ThemeProvider
             attribute="class"
