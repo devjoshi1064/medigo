@@ -66,7 +66,7 @@ export async function setUserRole(formData) {
             });
 
             revalidatePath("/");
-            return { success: true, redirect: "/doctors/verification" }
+            return { success: true, redirect: "/doctor/verification" }
         }
     } catch (error) {
         console.error("Failed to set user role:", error);
