@@ -1,3 +1,9 @@
+//about this page
+// This page component fetches doctors based on the speciality provided in the URL parameters. If no speciality is provided, it redirects to the main doctors page. It handles errors gracefully and displays a message if no doctors are found for the given speciality.
+import { redirect } from "next/navigation";
+import { getDoctorsBySpecialty } from "@/actions/doctors-listing";
+import { DoctorCard } from "@/components/doctor-card";
+import PageHeader from "@/components/page-header";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { SPECIALTIES } from "@/lib/specialities";

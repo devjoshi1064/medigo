@@ -1,3 +1,5 @@
+// about this page
+// This page component fetches doctors based on the speciality provided in the URL parameters. If no speciality is provided, it redirects to the main doctors page. It handles errors gracefully and displays a message if no doctors are found for the given speciality.
 "use server";
 
 import { db } from "@/lib/prisma";

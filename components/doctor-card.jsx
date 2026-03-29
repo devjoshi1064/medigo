@@ -1,3 +1,4 @@
+// This component represents a card that displays information about a doctor, including their name, specialty, experience, and a brief description. It also includes a button that links to the doctor's profile page where users can view more details and book an appointment. The card is styled with Tailwind CSS and uses icons from the Lucide React library for visual enhancement. --- IGNORE ---
 import { User, Star, Calendar } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
