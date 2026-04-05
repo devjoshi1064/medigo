@@ -1,0 +1,58 @@
+import { getDoctorAppointments, getDoctorAvailability } from '@/actions/doctor';
+import { getCurrentUser } from '@/actions/onboarding';
+import { TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Calendar, Clock } from 'lucide-react';
+import { Tabs } from 'radix-ui';
+import { redirect } from 'next/navigation';
+import React from 'react'
+import Availabilitysettings from './_components/availability-settings';
+
+const DoctorDasboard = async() => {
+    const user = await getCurrentUser();
+    const [appointmentsData, availabilityData] = await Promise.all([
+        getDoctorAppointments(),
+        getDoctorAvailability()
+    ]);
+
+    if(user?.role !== "DOCTOR"){
+        redirect("/onboarding");
+    }
+    //if already verified ,redirect to dashboard
+    if(user?.verificationStatus !== "VERIFIED"){
+        redirect("/doctor/verification");
+    }
+
+  return (
+        <Tabs
+        defaultValue="appointments"
+        className="grid grid-cols-1 md:grid-cols-4 gap-6"
+      >
+        <TabsList className="md:col-span-1 bg-muted/30 border h-15 md:h-28 sm:flex-row md:flex-col w-full p-2 md:p-1 rounded-md md:space-y-2 sm:space-x-2 md:space-x-0">
+          <TabsTrigger
+            value="appointements"
+            className="flex-1 md:flex md:items-center md:justify-start md:px-4 md:py-3 w-full"
+          >
+            <Calendar className="h-4 w-4 mr-2 hidden md:inline" />
+            <span>Appointments</span>
+          </TabsTrigger>
+          <TabsTrigger
+            value="availability"
+            className="flex-1 md:flex md:items-center md:justify-start md:px-4 md:py-3 w-full"
+          >
+            <Clock className="h-4 w-4 mr-2 hidden md:inline" />
+            <span>Availability</span>
+          </TabsTrigger>
+        </TabsList>
+        <div className=" md:col-span-3">
+        <TabsContent value="appointements" className="border-none p-0">
+            Todo
+        </TabsContent>
+        <TabsContent value="availability" className="border-none p-0">
+        <Availabilitysettings slots={availabilityData.slots ||[]} />
+        </TabsContent>
+        </div>
+      </Tabs>
+  );
+};
+
+export default DoctorDasboard;
