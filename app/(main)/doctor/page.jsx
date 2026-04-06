@@ -1,11 +1,10 @@
 import { getDoctorAppointments, getDoctorAvailability } from '@/actions/doctor';
 import { getCurrentUser } from '@/actions/onboarding';
-import { TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Calendar, Clock } from 'lucide-react';
-import { Tabs } from 'radix-ui';
 import { redirect } from 'next/navigation';
 import React from 'react'
-import Availabilitysettings from './_components/availability-settings';
+import { AvailabilitySettings } from './_components/availability-settings';
 
 const DoctorDasboard = async() => {
     const user = await getCurrentUser();
@@ -48,7 +47,7 @@ const DoctorDasboard = async() => {
             Todo
         </TabsContent>
         <TabsContent value="availability" className="border-none p-0">
-        <Availabilitysettings slots={availabilityData.slots ||[]} />
+        <AvailabilitySettings slots={availabilityData.slots ||[]} />
         </TabsContent>
         </div>
       </Tabs>

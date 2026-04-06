@@ -1,20 +1,30 @@
 "use client";
 
-import { setAvailabilitySlots } from "@/actions/doctor";
-import { Button } from "@/components/ui/button";
-import { Card, CardAction, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import useFetch from "@/hooks/use-fetch";
-import { format } from "date-fns";
-import { AlertCircle, Clock, Loader2, Plus } from "lucide-react";
-import { Label } from "radix-ui";
-import React, { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Clock, Plus, Loader2, AlertCircle } from "lucide-react";
+import { format } from "date-fns";
+import { setAvailabilitySlots } from "@/actions/doctor";
+import useFetch from "@/hooks/use-fetch";
 import { toast } from "sonner";
 
-const Availabilitysettings = ({ slots }) => {
+export function AvailabilitySettings({ slots }) {
   const [showForm, setShowForm] = useState(false);
+
+  // Custom hook for server action
   const { loading, fn: submitSlots, data } = useFetch(setAvailabilitySlots);
+
+  // React Hook Form
   const {
     register,
     handleSubmit,
@@ -45,6 +55,7 @@ const Availabilitysettings = ({ slots }) => {
 
     const formData = new FormData();
 
+    const today = new Date().toISOString().split("T")[0];
 
     // Create date objects
     const startDate = createLocalDateFromTime(data.startTime);
@@ -68,7 +79,7 @@ const Availabilitysettings = ({ slots }) => {
       toast.success("Availability slots updated successfully");
     }
   }, [data]);
- 
+
   // Format time string for display
   const formatTimeString = (dateString) => {
     try {
@@ -82,16 +93,18 @@ const Availabilitysettings = ({ slots }) => {
     <Card className="border-emerald-900/20">
       <CardHeader>
         <CardTitle className="text-xl font-bold text-white flex items-center">
-          <Clock className="h-5 w-5 mr-2 text-emerald-400"></Clock>
+          <Clock className="h-5 w-5 mr-2 text-emerald-400" />
           Availability Settings
-          </CardTitle>
-        <CardDescription> Set your daily availability for patients appointments </CardDescription>
-        <CardAction>Card Action</CardAction>
+        </CardTitle>
+        <CardDescription>
+          Set your daily availability for patient appointments
+        </CardDescription>
       </CardHeader>
       <CardContent>
+        {/* Current Availability Display */}
         {!showForm ? (
           <>
-          <div className="mb-6">
+            <div className="mb-6">
               <h3 className="text-lg font-medium text-white mb-3">
                 Current Availability
               </h3>
@@ -125,90 +138,99 @@ const Availabilitysettings = ({ slots }) => {
                 </div>
               )}
             </div>
-          <Button onClick={() => setShowForm(true)}
-          className="w-full bg-emerald-600 hover:bg-emerald-700/90 border-emerald-700">
-            <Plus className="h-4 w-4 mr-2"> Set Availability Time </Plus>
-            
-          </Button>
+
+            <Button
+              onClick={() => setShowForm(true)}
+              className="w-full bg-emerald-600 hover:bg-emerald-700"
+            >
+              <Plus className="h-4 w-4 mr-2" />
+              Set Availability Time
+            </Button>
           </>
-        ):(
-          <form className="space-y-4 border border-emerald-900/20  rounded-md p-4"
-          onSubmit={handleSubmit(onSubmit)}>
+        ) : (
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="space-y-4 border border-emerald-900/20 rounded-md p-4"
+          >
             <h3 className="text-lg font-medium text-white mb-2">
               Set Daily Availability
             </h3>
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-2 ">
+              <div className="space-y-2">
                 <Label htmlFor="startTime">Start Time</Label>
-                <Input id="startTime" type="time" {...register("startTime",{
-                  required: "Start time is required"
-                })} 
-                className="bg-background border-emerald-900/20"
+                <Input
+                  id="startTime"
+                  type="time"
+                  {...register("startTime", {
+                    required: "Start time is required",
+                  })}
+                  className="bg-background border-emerald-900/20"
                 />
                 {errors.startTime && (
-                  <p className="text-sm font-medium text-red-500 ">
+                  <p className="text-sm font-medium text-red-500">
                     {errors.startTime.message}
                   </p>
                 )}
               </div>
-              <div>
+
+              <div className="space-y-2">
                 <Label htmlFor="endTime">End Time</Label>
-                <Input id="endTime" type="time" {...register("endTime",{
-                  required: "End time is required"
-                })} 
-                className="bg-background border-emerald-900/20"
+                <Input
+                  id="endTime"
+                  type="time"
+                  {...register("endTime", { required: "End time is required" })}
+                  className="bg-background border-emerald-900/20"
                 />
                 {errors.endTime && (
-                  <p className="text-sm font-medium text-red-500 ">
+                  <p className="text-sm font-medium text-red-500">
                     {errors.endTime.message}
                   </p>
                 )}
               </div>
             </div>
+
             <div className="flex justify-end space-x-3 pt-2">
-              <Button type="button"
-              variant="outline"
-              onClick={() => setShowForm(false)}
-              disabled={loading}
-              className="border-emerald-900/30"
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setShowForm(false)}
+                disabled={loading}
+                className="border-emerald-900/30"
               >
                 Cancel
               </Button>
               <Button
-              type="submit"
-              variant="outline"
-              onClick={() => setShowForm(false)}
-              disabled={loading}
-              className="border-emerald-900/30"
+                type="submit"
+                disabled={loading}
+                className="bg-emerald-600 hover:bg-emerald-700"
               >
-                {loading ?(
+                {loading ? (
                   <>
-                  <Loader2 className="animate-spin h-4 w-4 mr-2" />
-                    saving...
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Saving...
                   </>
-                  ) : (
-                    "Save Availability"
+                ) : (
+                  "Save Availability"
                 )}
-                </Button>
+              </Button>
             </div>
           </form>
         )}
-        {/* how Availability works */}
-        <div className="mt-6 p-4 bg-muted/10 border border-emerald-900/20 rounded-md">
-        <h4 className="font-medium text-white mb-2 flex items-center">
-          <AlertCircle className="h-4 w-4 mr-2 text-emerald-400" />
-          How Availability Works
-        </h4>
-        <p className="text-sm text-muted-foreground">
-          Setting your daily availability allows patients to book appointments
+
+        <div className="mt-6 p-4 bg-muted/10 border border-emerald-900/10 rounded-md">
+          <h4 className="font-medium text-white mb-2 flex items-center">
+            <AlertCircle className="h-4 w-4 mr-2 text-emerald-400" />
+            How Availability Works
+          </h4>
+          <p className="text-muted-foreground text-sm">
+            Setting your daily availability allows patients to book appointments
             during those hours. The same availability applies to all days. You
             can update your availability at any time, but existing booked
             appointments will not be affected.
-        </p>
+          </p>
         </div>
       </CardContent>
     </Card>
-  )
-};
-
-  export default Availabilitysettings
+  );
+}
