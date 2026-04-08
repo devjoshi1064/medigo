@@ -77,7 +77,7 @@ export function VerifiedDoctors({ doctors }) {
               </CardDescription>
             </div>
             <div className="relative w-full md:w-64">
-              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+              {/* <Search className="absolute left-4.5 top-4.5 h-4 w-4 text-muted-foreground " /> */}
               <Input
                 placeholder="Search doctors..."
                 className="pl-8 bg-background border-emerald-900/20"

@@ -16,7 +16,7 @@ const AdminLayout = async ({ children }) => {
     redirect("/onbording");
   }
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-24">
       <PageHeader icon={<ShieldCheck />} title="Admin settings" />
       <Tabs
         defaultValue="pending"

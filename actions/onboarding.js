@@ -3,7 +3,6 @@
 import { db } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 
 export async function setUserRole(formData) {
     const { userId } = await auth();
@@ -27,7 +26,7 @@ export async function setUserRole(formData) {
     if (!role || !["PATIENT", "DOCTOR"].includes(role)) {
         throw new Error("Invalid role selected");
     }
-
+    
     try {
         if (role === "PATIENT") {
             await db.user.update({
