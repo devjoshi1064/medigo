@@ -95,3 +95,65 @@ export async function checkAndAllocateCredits(user) {
         return null;
     }
 }
+
+export async function deductCreditsForAppointment(userId , doctorId) {
+    try {
+        const user = await db.user.findUnique({
+            where: {
+                id: userId,
+            }
+        });
+
+        const doctor = await db.user.findUnique({
+            where: {
+                id: doctorId
+            }
+        });
+
+        if (user.credits < APPOINTMENT_CREDIT_COST) {
+            throw new Error("Insufficient credits to book appointment");
+        }
+
+        if (!doctor) {
+            throw new Error("Doctor not found");
+        }
+
+        const result = await db.$transaction(async (tx) => {
+            await tx.creditTransaction.create({
+                data:{
+                    userId: userId,
+                    amount: -APPOINTMENT_CREDIT_COST,
+                    type: "APPOINTMENT_DEDUCTION",
+                }
+            });
+
+            const updatedUser = await tx.user.update({
+                where: {
+                    id:userId,
+                },
+                data: {
+                    credits: {
+                        decrement: APPOINTMENT_CREDIT_COST,
+                    }
+                }
+            });
+
+            await tx.user.update({
+                where:{
+                    id:doctorId,
+                },
+                data: {
+                    credits: {
+                        increment: APPOINTMENT_CREDIT_COST,
+                    }
+                }
+            });
+
+            return updatedUser;
+        })
+
+        return { success: true , user: result};
+    } catch (error) {
+        return {success: false , error: error.message};
+    }
+}
