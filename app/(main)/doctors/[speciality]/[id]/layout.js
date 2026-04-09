@@ -1,4 +1,4 @@
-import { getDoctorById } from '@/actions/appoinments';
+import { getDoctorById } from '@/actions/appointments';
 import PageHeader from '@/components/page-header';
 import { redirect } from 'next/dist/server/api-utils';
 import React from 'react'

@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { format } from "date-fns";
 
 import { Loader2, Clock, ArrowLeft, Calendar, CreditCard } from "lucide-react";
-import { bookAppointment } from "@/actions/appoinments"
+import { bookAppointment } from "@/actions/appointments"
 import { toast } from "sonner";
 import useFetch from "@/hooks/use-fetch";
 

@@ -178,25 +178,24 @@ export async function cancelAppointment(formData) {
                     id: appointmentId,
                 },
                 data: {
-                    status: "CANCELED",
+                    status: "CANCELLED",
                 },
             });
             await tx.creditTransaction.create({ 
                 data: {
                     userId: appointment.patientId,
                     amount: 2,
-                    type: "Appointment_Deduction",
+                    type: "APPOINTMENT_DEDUCTION",
                 }
             });
-            
             await tx.creditTransaction.create({ 
                 data: {
-                    userId: appointment.patientId,
+                    userId: appointment.doctorId,
                     amount: -2,
-                    type: "Appointment_Deduction",
+                    type: "APPOINTMENT_DEDUCTION",
                 }
             });
-            //Update patient credits balance(increment)
+            // Update patient credits balance (refund)
             await tx.user.update({
                 where: {
                     id: appointment.patientId,
@@ -207,7 +206,7 @@ export async function cancelAppointment(formData) {
                     },
                 },
             });
-            //Update doctor credits balance(decrement)
+            // Update doctor credits balance (reverse payment)
             await tx.user.update({
                 where: {
                     id: appointment.doctorId,
