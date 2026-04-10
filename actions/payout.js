@@ -190,6 +190,6 @@ export async function getDoctorEarnings() {
       },
     };
   } catch (error) {
-    throw new Error("Failed to fetch doctor earnings: " + error.message);
+    throw new Error(`Failed to fetch doctor earnings:  + ${error.message}`);
   }
 }

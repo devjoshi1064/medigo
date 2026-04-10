@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Script from "next/script";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import {
   Loader2,
   Video,
@@ -129,6 +128,7 @@ const VideoCall = ({ sessionId, token }) => {
     toast.error("Failed to initialize video call");
       setIsLoading(false);
   }
+};
 
    // Toggle video
   const toggleVideo = () => {
@@ -231,7 +231,7 @@ const VideoCall = ({ sessionId, token }) => {
               {/* Publisher (Your video) */}
               <div className="border border-emerald-900/20 rounded-lg overflow-hidden">
                 <div className="bg-emerald-900/10 px-3 py-2 text-emerald-400 text-sm font-medium">
-                  You
+                  you
                 </div>
                 <div
                   id="publisher"
@@ -323,6 +323,5 @@ const VideoCall = ({ sessionId, token }) => {
     </>
   );
 }
-}
 
-export default VideoCall;
+export default VideoCall

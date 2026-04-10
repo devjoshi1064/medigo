@@ -1,13 +1,16 @@
-import { getPendingDoctors, getVerifyDoctors } from "@/actions/admin";
 import { TabsContent } from "@/components/ui/tabs";
+import { getPendingDoctors, getVerifyDoctors,getPendingPayouts } from "@/actions/admin";
 import React from "react";
 import { VerifiedDoctors } from "./_Components/verified-doctors";
 import { PendingDoctors } from "./_Components/pending-doctors";
+import { PendingPayouts } from "./_Components/pending-payouts";
+
 
 const AdminPage = async ()  => {
-   const [pendingDoctorsData,verifiedDoctorsData] = await Promise.all([
+   const [pendingDoctorsData,verifiedDoctorsData,pendingPayoutsData] = await Promise.all([
         getPendingDoctors(),
-        getVerifyDoctors()
+        getVerifyDoctors(),
+        getPendingPayouts(),
     ]);
   return (
     <>
@@ -16,6 +19,9 @@ const AdminPage = async ()  => {
       </TabsContent>
       <TabsContent value="doctors"className="border-none p-0"> 
         <VerifiedDoctors doctors= {verifiedDoctorsData.doctors || []}/>
+      </TabsContent>
+      <TabsContent value="payouts" className="border-none p-0">
+        <PendingPayouts payouts={pendingPayoutsData.payouts || []} />
       </TabsContent>
     </>
   );
