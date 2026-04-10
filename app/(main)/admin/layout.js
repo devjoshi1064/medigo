@@ -1,7 +1,7 @@
 import { verifyAdmin } from "@/actions/admin";
 import PageHeader from "@/components/page-header";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { AlertCircle, ShieldCheck, Users } from "lucide-react";
+import { AlertCircle, CreditCard, ShieldCheck, Users } from "lucide-react";
 import { redirect } from "next/navigation";
 
 export const metadata = {
@@ -16,13 +16,15 @@ const AdminLayout = async ({ children }) => {
     redirect("/onbording");
   }
   return (
-    <div className="container mx-auto px-4 py-24">
-      <PageHeader icon={<ShieldCheck />} title="Admin settings" />
+     <div className="container mx-auto px-4 py-8">
+      <PageHeader icon={<ShieldCheck />} title="Admin Settings" />
+
+      {/* Vertical tabs on larger screens / Horizontal tabs on mobile */}
       <Tabs
         defaultValue="pending"
         className="grid grid-cols-1 md:grid-cols-4 gap-6"
       >
-        <TabsList className="md:col-span-1 bg-muted/30 border h-15 md:h-28 sm:flex-row md:flex-col w-full p-2 md:p-1 rounded-md md:space-y-2 sm:space-x-2 md:space-x-0">
+        <TabsList className="md:col-span-1 bg-muted/30 border h-14 md:h-40 flex sm:flex-row md:flex-col w-full p-2 md:p-1 rounded-md md:space-y-2 sm:space-x-2 md:space-x-0">
           <TabsTrigger
             value="pending"
             className="flex-1 md:flex md:items-center md:justify-start md:px-4 md:py-3 w-full"
@@ -35,7 +37,7 @@ const AdminLayout = async ({ children }) => {
             className="flex-1 md:flex md:items-center md:justify-start md:px-4 md:py-3 w-full"
           >
             <Users className="h-4 w-4 mr-2 hidden md:inline" />
-            <span>Doctor</span>
+            <span>Doctors</span>
           </TabsTrigger>
           <TabsTrigger
             value="payouts"
