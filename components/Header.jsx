@@ -10,6 +10,7 @@ import Image from "next/image";
 
 const Header = async () => {
     const user = await checkUser();
+    console.log(user);
     if (user?.role === "PATIENT") {
         await checkAndAllocateCredits(user);
     }
@@ -41,7 +42,7 @@ const Header = async () => {
                                 <Button variant="outline" className="hidden md:inline-flex items-center gap-2">
                                     <Calendar className="w-4 h-4" />
                                     My Appointments
-                                </Button>
+                                </Button>  
                                 <Button className="md:hidden w-10 h-10" variant="ghost">
                                     <Calendar className="w-4 h-4" />
                                 </Button>

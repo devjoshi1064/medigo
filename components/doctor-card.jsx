@@ -29,7 +29,7 @@ export function DoctorCard({ doctor }) {
                 variant="outline"
                 className="bg-emerald-900/20 border-emerald-900/30 text-emerald-400 self-start"
               >
-                <Star className="h-3 w-3 mr-1" />
+                <Star className="h-3 w-3 mr-1 flex justify-center align-middle col-end-2 " />
                 Verified
               </Badge>
             </div>

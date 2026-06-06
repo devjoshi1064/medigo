@@ -108,7 +108,7 @@ model CreditTransaction {
 }
 
 enum TransactionType {
-  CREDIT_PURCHASE       // Credits purchased through Clerk Billing
+  c // Credits purchased through Clerk Billing
   APPOINTMENT_DEDUCTION // Credit used for appointment
   ADMIN_ADJUSTMENT      // Manual adjustment by admin
 }
